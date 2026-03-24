@@ -1,1034 +1,1016 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.4">
-  <style type="text/css">
-    body {background-color: #0c0d10}
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.2px 'Helvetica Neue'; color: #787e97; -webkit-text-stroke: #787e97; background-color: #1a1d31}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.2px 'Helvetica Neue'; color: #787e97; -webkit-text-stroke: #787e97; background-color: #1a1d31; min-height: 12.0px}
-    span.s1 {font-kerning: none}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#fff159"/>
+  <title>SellHub - Gestão Mercado Livre</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    :root {
+      --primary: #2d3277;
+      --secondary: #fff159;
+      --success: #00a650;
+      --warning: #ff9900;
+      --danger: #dc3545;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --gray: #6c757d;
+      --border: #dee2e6;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    body { background: var(--light); color: #333; line-height: 1.5; }
+    
+    /* Header */
+    .header { background: linear-gradient(135deg, var(--secondary) 0%, #ffe600 100%); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: var(--primary); }
+    .logo-icon { font-size: 24px; }
+    .user-menu { display: flex; align-items: center; gap: 12px; }
+    .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; cursor: pointer; }
+    .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #1e2150; }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #008a42; }
+    .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background: var(--primary); color: white; }
+    .btn-sm { padding: 6px 12px; font-size: 14px; }
+    
+    /* Layout */
+    .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+    .grid { display: grid; gap: 20px; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    
+    /* Cards */
+    .card { background: white; border-radius: 12px; padding: 20px; box-shadow: var(--shadow); }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .card-title { font-weight: 600; font-size: 18px; color: var(--primary); }
+    .card-body { color: #555; }
+    
+    /* Stats */
+    .stat-card { text-align: center; padding: 24px 16px; }
+    .stat-value { font-size: 32px; font-weight: 700; color: var(--primary); margin: 8px 0; }
+    .stat-label { color: var(--gray); font-size: 14px; }
+    .stat-icon { font-size: 32px; margin-bottom: 8px; }
+    
+    /* Navigation */
+    .nav { display: flex; gap: 4px; background: white; padding: 8px; border-radius: 12px; box-shadow: var(--shadow); overflow-x: auto; margin-bottom: 20px; }
+    .nav-item { padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; white-space: nowrap; transition: all 0.2s; }
+    .nav-item:hover { background: var(--light); }
+    .nav-item.active { background: var(--primary); color: white; }
+    
+    /* Tables */
+    .table { width: 100%; border-collapse: collapse; }
+    .table th { text-align: left; padding: 12px 16px; background: var(--light); font-weight: 600; color: var(--gray); font-size: 13px; text-transform: uppercase; }
+    .table td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .table tr:hover { background: #fafafa; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .badge-success { background: #d4edda; color: #155724; }
+    .badge-warning { background: #fff3cd; color: #856404; }
+    .badge-danger { background: #f8d7da; color: #721c24; }
+    .badge-info { background: #d1ecf1; color: #0c5460; }
+    
+    /* Forms */
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; margin-bottom: 6px; font-weight: 500; color: #555; }
+    .form-control { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; transition: border-color 0.2s; }
+    .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,50,119,0.1); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    
+    /* Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .modal.active { display: flex; }
+    .modal-content { background: white; border-radius: 16px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .modal-body { padding: 20px; }
+    .modal-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+    .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); }
+    
+    /* Auth Screen */
+    .auth-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .auth-card { background: white; border-radius: 20px; padding: 40px; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .auth-logo { font-size: 48px; margin-bottom: 16px; }
+    .auth-title { font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .auth-subtitle { color: var(--gray); margin-bottom: 24px; }
+    .auth-form { text-align: left; }
+    .auth-footer { margin-top: 20px; color: var(--gray); font-size: 14px; }
+    .auth-footer a { color: var(--primary); text-decoration: none; }
+    
+    /* Empty State */
+    .empty { text-align: center; padding: 40px 20px; color: var(--gray); }
+    .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+    
+    /* Loading */
+    .loading { display: none; text-align: center; padding: 20px; }
+    .loading.active { display: block; }
+    .spinner { width: 40px; height: 40px; border: 4px solid var(--light); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    /* Toast */
+    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--dark); color: white; padding: 14px 20px; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: none; z-index: 2000; animation: slideIn 0.3s ease; }
+    .toast.active { display: block; }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header { padding: 12px 16px; }
+      .logo { font-size: 18px; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav { padding: 4px; }
+      .nav-item { padding: 8px 12px; font-size: 14px; }
+    }
+    
+    /* Utilities */
+    .hidden { display: none !important; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .mt-2 { margin-top: 8px; }
+    .mt-4 { margin-top: 16px; }
+    .mb-2 { margin-bottom: 8px; }
+    .mb-4 { margin-bottom: 16px; }
+    .d-flex { display: flex; }
+    .align-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: 8px; }
+    .flex-wrap { flex-wrap: wrap; }
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="pt-BR"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;meta name="theme-color" content="#fff159"/&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;title&gt;SellHub - Gestão Mercado Livre&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>:root {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--primary: #2d3277;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--secondary: #fff159;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--success: #00a650;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--warning: #ff9900;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--danger: #dc3545;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--light: #f8f9fa;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--dark: #343a40;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--gray: #6c757d;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--border: #dee2e6;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>--shadow: 0 2px 8px rgba(0,0,0,0.08);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>body { background: var(--light); color: #333; line-height: 1.5; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Header */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.header { background: linear-gradient(135deg, var(--secondary) 0%, #ffe600 100%); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: var(--primary); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.logo-icon { font-size: 24px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.user-menu { display: flex; align-items: center; gap: 12px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.user-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; cursor: pointer; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-primary { background: var(--primary); color: white; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-primary:hover { background: #1e2150; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-success { background: var(--success); color: white; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-success:hover { background: #008a42; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-outline:hover { background: var(--primary); color: white; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.btn-sm { padding: 6px 12px; font-size: 14px; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Layout */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.container { max-width: 1400px; margin: 0 auto; padding: 20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.grid { display: grid; gap: 20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Cards */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.card { background: white; border-radius: 12px; padding: 20px; box-shadow: var(--shadow); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.card-title { font-weight: 600; font-size: 18px; color: var(--primary); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.card-body { color: #555; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Stats */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.stat-card { text-align: center; padding: 24px 16px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.stat-value { font-size: 32px; font-weight: 700; color: var(--primary); margin: 8px 0; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.stat-label { color: var(--gray); font-size: 14px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.stat-icon { font-size: 32px; margin-bottom: 8px; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Navigation */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.nav { display: flex; gap: 4px; background: white; padding: 8px; border-radius: 12px; box-shadow: var(--shadow); overflow-x: auto; margin-bottom: 20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.nav-item { padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; white-space: nowrap; transition: all 0.2s; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.nav-item:hover { background: var(--light); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.nav-item.active { background: var(--primary); color: white; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Tables */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.table { width: 100%; border-collapse: collapse; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.table th { text-align: left; padding: 12px 16px; background: var(--light); font-weight: 600; color: var(--gray); font-size: 13px; text-transform: uppercase; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.table td { padding: 12px 16px; border-bottom: 1px solid var(--border); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.table tr:hover { background: #fafafa; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.badge-success { background: #d4edda; color: #155724; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.badge-warning { background: #fff3cd; color: #856404; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.badge-danger { background: #f8d7da; color: #721c24; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.badge-info { background: #d1ecf1; color: #0c5460; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Forms */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.form-group { margin-bottom: 16px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.form-label { display: block; margin-bottom: 6px; font-weight: 500; color: #555; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.form-control { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; transition: border-color 0.2s; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,50,119,0.1); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Modal */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.modal.active { display: flex; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.modal-content { background: white; border-radius: 16px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.modal-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.modal-body { padding: 20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.modal-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Auth Screen */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.auth-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.auth-card { background: white; border-radius: 20px; padding: 40px; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.auth-logo { font-size: 48px; margin-bottom: 16px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.auth-title { font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.auth-subtitle { color: var(--gray); margin-bottom: 24px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.auth-form { text-align: left; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.auth-footer { margin-top: 20px; color: var(--gray); font-size: 14px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.auth-footer a { color: var(--primary); text-decoration: none; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Empty State */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.empty { text-align: center; padding: 40px 20px; color: var(--gray); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Loading */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.loading { display: none; text-align: center; padding: 20px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.loading.active { display: block; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.spinner { width: 40px; height: 40px; border: 4px solid var(--light); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes spin { to { transform: rotate(360deg); } }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Toast */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.toast { position: fixed; bottom: 20px; right: 20px; background: var(--dark); color: white; padding: 14px 20px; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: none; z-index: 2000; animation: slideIn 0.3s ease; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.toast.active { display: block; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.toast.success { background: var(--success); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.toast.error { background: var(--danger); }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Responsive */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>@media (max-width: 768px) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.header { padding: 12px 16px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.logo { font-size: 18px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.form-row { grid-template-columns: 1fr; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.nav { padding: 4px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>.nav-item { padding: 8px 12px; font-size: 14px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>/* Utilities */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.hidden { display: none !important; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.text-center { text-align: center; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.text-right { text-align: right; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.mt-2 { margin-top: 8px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.mt-4 { margin-top: 16px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.mb-2 { margin-bottom: 8px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.mb-4 { margin-bottom: 16px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.d-flex { display: flex; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.align-center { align-items: center; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.justify-between { justify-content: space-between; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.gap-2 { gap: 8px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>.flex-wrap { flex-wrap: wrap; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Auth Screen --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="authScreen" class="auth-container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="auth-card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="auth-logo"&gt;🛒&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;h1 class="auth-title"&gt;SellHub&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;p class="auth-subtitle"&gt;Gestão inteligente para Mercado Livre&lt;/p&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="auth-form"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;label class="form-label"&gt;Nome da sua loja&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;input type="text" id="storeName" class="form-control" placeholder="Ex: Minha Loja Top" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="handleLogin()"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>🚀 Entrar agora</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="mt-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-outline" style="width:100%; justify-content:center;" onclick="showFirebaseSetup()"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>☁️ Sincronizar na nuvem</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;p class="auth-footer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>✅ Dados salvos no navegador • Funciona offline&lt;br&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;a href="#" onclick="showHelp()"&gt;Precisa de ajuda?&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Main App --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="appScreen" class="hidden"&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Header --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;header class="header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="logo"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span class="logo-icon"&gt;🛒&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span&gt;SellHub&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="user-menu"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;span id="userName" style="font-weight:500;"&gt;&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="user-avatar" onclick="showSettings()" title="Configurações"&gt;⚙️&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Navigation --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;nav class="container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="nav"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="nav-item active" onclick="showSection('dashboard')"&gt;📊 Dashboard&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="nav-item" onclick="showSection('listings')"&gt;📦 Anúncios&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="nav-item" onclick="showSection('stock')"&gt;🏭 Estoque&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="nav-item" onclick="showSection('messages')"&gt;💬 Mensagens&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="nav-item" onclick="showSection('finance')"&gt;💰 Financeiro&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="nav-item" onclick="showSection('settings')"&gt;⚙️ Config&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Content --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;main class="container"&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;!-- Dashboard --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;section id="dashboard" class="section active"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card stat-card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-icon"&gt;📦&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-value" id="statListings"&gt;0&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-label"&gt;Anúncios Ativos&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card stat-card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-icon"&gt;💬&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-value" id="statMessages"&gt;0&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-label"&gt;Mensagens&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card stat-card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-icon"&gt;🏭&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-value" id="statStock"&gt;0&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-label"&gt;Produtos em Estoque&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card stat-card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-icon"&gt;⭐&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-value" id="statRating"&gt;4.8&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="stat-label"&gt;Avaliação Média&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-2 mt-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="card-title"&gt;🔔 Atividades Recentes&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;button class="btn btn-sm btn-outline" onclick="refreshData()"&gt;🔄 Atualizar&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div id="activitiesList"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="empty"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;div class="empty-icon"&gt;📭&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;p&gt;Nenhuma atividade recente&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;span class="card-title"&gt;⚡ Ações Rápidas&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="card-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="grid" style="grid-template-columns: 1fr 1fr; gap: 12px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-primary" onclick="openNewListingModal()"&gt;📦 Novo Anúncio&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-success" onclick="showSection('messages')"&gt;💬 Ver Mensagens&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-outline" onclick="openStockModal()"&gt;🏭 Gerenciar Estoque&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-outline" onclick="connectMercadoLivre()"&gt;🔗 Conectar ML&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;!-- Listings --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;section id="listings" class="section hidden"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="card-title"&gt;📦 Meus Anúncios&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-primary btn-sm" onclick="openNewListingModal()"&gt;+ Novo&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div style="overflow-x:auto;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;table class="table"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;thead&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;th&gt;Produto&lt;/th&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;th&gt;Preço&lt;/th&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;th&gt;Estoque&lt;/th&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;th&gt;Status&lt;/th&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;th&gt;Ações&lt;/th&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;/tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/thead&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;tbody id="listingsTable"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;td colspan="5" class="text-center" style="padding:40px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;div class="empty"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="empty-icon"&gt;📦&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Nenhum anúncio encontrado&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;button class="btn btn-primary mt-2" onclick="openNewListingModal()"&gt;Criar primeiro anúncio&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;/tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/tbody&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/table&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;!-- Stock --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;section id="stock" class="section hidden"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="card-title"&gt;🏭 Controle de Estoque&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-primary btn-sm" onclick="openStockModal()"&gt;+ Adicionar&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div id="stockList"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="empty"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="empty-icon"&gt;🏭&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p&gt;Estoque vazio&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;!-- Messages --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;section id="messages" class="section hidden"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="card-title"&gt;💬 Mensagens&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="badge badge-info" id="messagesCount"&gt;0 novas&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div id="messagesList"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="empty"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="empty-icon"&gt;💬&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p&gt;Nenhuma mensagem&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;!-- Finance --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;section id="finance" class="section hidden"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="card-title"&gt;💰 Resumo Financeiro&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-3"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="stat-card" style="background:var(--light); border-radius:12px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="stat-value" style="color:var(--success);"&gt;R$ 0,00&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="stat-label"&gt;Vendas Hoje&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="stat-card" style="background:var(--light); border-radius:12px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="stat-value" style="color:var(--primary);"&gt;R$ 0,00&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="stat-label"&gt;Vendas Mês&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="stat-card" style="background:var(--light); border-radius:12px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="stat-value" style="color:var(--warning);"&gt;R$ 0,00&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="stat-label"&gt;A Receber&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="mt-4 empty"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;p&gt;Conecte sua conta do Mercado Livre para ver dados financeiros&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;button class="btn btn-primary mt-2" onclick="connectMercadoLivre()"&gt;🔗 Conectar Agora&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;!-- Settings --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;section id="settings" class="section hidden"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="card-title"&gt;⚙️ Configurações&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="card-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;label class="form-label"&gt;Nome da Loja&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;input type="text" id="settingsStoreName" class="form-control" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;label class="form-label"&gt;Mercado Livre&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div style="display:flex; gap:10px; flex-wrap:wrap;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-primary" onclick="connectMercadoLivre()"&gt;🔗 Conectar Conta&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-outline" onclick="disconnectMercadoLivre()"&gt;🔌 Desconectar&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;small style="color:var(--gray); display:block; margin-top:6px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Status: &lt;span id="mlStatus"&gt;Não conectado&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/small&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;label class="form-label"&gt;Dados&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div style="display:flex; gap:10px; flex-wrap:wrap;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-outline" onclick="exportData()"&gt;📥 Exportar Dados&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-outline" onclick="clearData()"&gt;🗑️ Limpar Dados&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;hr style="margin:20px 0; border:none; border-top:1px solid var(--border);"/&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-danger" onclick="logout()" style="width:100%;"&gt;🚪 Sair&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/section&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- New Listing Modal --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="newListingModal" class="modal"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="modal-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="modal-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h3&gt;📦 Novo Anúncio&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="modal-close" onclick="closeModal('newListingModal')"&gt;&amp;times;&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="modal-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;label class="form-label"&gt;Título do Produto *&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;input type="text" id="listingTitle" class="form-control" placeholder="Ex: Camiseta Básica Algodão" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-row"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;label class="form-label"&gt;Preço (R$) *&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;input type="number" id="listingPrice" class="form-control" step="0.01" placeholder="0.00" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;label class="form-label"&gt;Estoque *&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;input type="number" id="listingStock" class="form-control" placeholder="0" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;label class="form-label"&gt;Categoria&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;select id="listingCategory" class="form-control"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value=""&gt;Selecione...&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value="roupas"&gt;Roupas e Acessórios&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value="eletronicos"&gt;Eletrônicos&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value="casa"&gt;Casa e Decoração&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value="esportes"&gt;Esportes e Lazer&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value="outros"&gt;Outros&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/select&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;label class="form-label"&gt;Descrição&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;textarea id="listingDescription" class="form-control" rows="4" placeholder="Descreva seu produto..."&gt;&lt;/textarea&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="modal-footer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-outline" onclick="closeModal('newListingModal')"&gt;Cancelar&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-primary" onclick="saveListing()"&gt;💾 Salvar Anúncio&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Stock Modal --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="stockModal" class="modal"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="modal-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="modal-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h3&gt;🏭 Gerenciar Estoque&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="modal-close" onclick="closeModal('stockModal')"&gt;&amp;times;&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="modal-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;label class="form-label"&gt;Produto&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;select id="stockProduct" class="form-control"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value=""&gt;Selecione...&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/select&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;label class="form-label"&gt;Quantidade&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;input type="number" id="stockQuantity" class="form-control" placeholder="0" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;label class="form-label"&gt;Tipo de Movimento&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;select id="stockType" class="form-control"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value="entrada"&gt;➕ Entrada (compra)&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value="saida"&gt;➖ Saída (venda)&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;option value="ajuste"&gt;🔧 Ajuste manual&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/select&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="modal-footer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-outline" onclick="closeModal('stockModal')"&gt;Cancelar&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-success" onclick="updateStock()"&gt;✅ Atualizar&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Settings Modal --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="settingsModal" class="modal"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="modal-content"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="modal-header"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;h3&gt;⚙️ Configurações&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="modal-close" onclick="closeModal('settingsModal')"&gt;&amp;times;&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="modal-body"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p style="color:var(--gray); margin-bottom:16px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>Configure sua integração com o Mercado Livre para sincronizar dados automaticamente.</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;label class="form-label"&gt;Client ID do Mercado Livre&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;input type="text" id="mlClientId" class="form-control" placeholder="APP-XXXXXXXX-XXXXXXXX" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;label class="form-label"&gt;Client Secret&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;input type="password" id="mlClientSecret" class="form-control" placeholder="••••••••••••••••" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;small style="color:var(--gray);"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>💡 Obtenha suas credenciais em:<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;a href="https://developers.mercadolibre.com.br" target="_blank"&gt;developers.mercadolibre.com.br&lt;/a&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/small&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div class="modal-footer"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-outline" onclick="closeModal('settingsModal')"&gt;Cancelar&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-primary" onclick="saveMLCredentials()"&gt;💾 Salvar&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Toast --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="toast" class="toast"&gt;&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;!-- Loading --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="loading" class="loading"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="spinner"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;p&gt;Carregando...&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Estado Global ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>let state = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>storeName: '',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>userName: '',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>mlConnected: false,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>mlToken: null,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>listings: [],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>stock: [],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>messages: [],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Inicialização ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>document.addEventListener('DOMContentLoaded', () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>loadState();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>checkAuth();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setupEventListeners();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>checkMLCallback();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function loadState() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>try {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const saved = localStorage.getItem('sellhub_state');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if (saved) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const parsed = JSON.parse(saved);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>state = { ...state, ...parsed };</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>} catch (e) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>console.error('Erro ao carregar estado:', e);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function saveState() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>try {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>localStorage.setItem('sellhub_state', JSON.stringify(state));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>} catch (e) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>console.error('Erro ao salvar estado:', e);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function checkAuth() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (state.storeName) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.getElementById('authScreen').classList.add('hidden');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.getElementById('appScreen').classList.remove('hidden');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.getElementById('userName').textContent = state.userName || state.storeName;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.getElementById('settingsStoreName').value = state.storeName;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>updateDashboard();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function handleLogin() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const storeName = document.getElementById('storeName').value.trim();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (!storeName) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>showToast('Digite o nome da sua loja', 'error');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>state.storeName = storeName;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>state.userName = storeName;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>saveState();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>checkAuth();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>showToast('Bem-vindo ao SellHub! 🎉', 'success');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function logout() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (confirm('Deseja realmente sair?')) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>localStorage.removeItem('sellhub_state');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>location.reload();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Navegação ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function showSection(sectionId) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.querySelectorAll('.section').forEach(s =&gt; s.classList.add('hidden'));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.querySelectorAll('.nav-item').forEach(n =&gt; n.classList.remove('active'));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById(sectionId).classList.remove('hidden');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>event.target.classList.add('active');</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (sectionId === 'dashboard') updateDashboard();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (sectionId === 'listings') renderListings();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (sectionId === 'stock') renderStock();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (sectionId === 'messages') renderMessages();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Dashboard ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function updateDashboard() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('statListings').textContent = state.listings.length;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('statMessages').textContent = state.messages.length;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('statStock').textContent = state.stock.reduce((sum, s) =&gt; sum + (s.quantity || 0), 0);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const activities = document.getElementById('activitiesList');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (state.listings.length === 0 &amp;&amp; state.messages.length === 0) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>activities.innerHTML = `</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="empty"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="empty-icon"&gt;📭&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;Nenhuma atividade recente&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-primary mt-2" onclick="openNewListingModal()"&gt;Criar primeiro anúncio&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>} else {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>activities.innerHTML = state.listings.slice(0, 5).map(l =&gt; `</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div style="padding:12px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span style="font-size:20px;"&gt;📦&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div style="flex:1;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div style="font-weight:500;"&gt;${l.title}&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;small style="color:var(--gray);"&gt;R$ ${l.price} • Estoque: ${l.stock}&lt;/small&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="badge badge-success"&gt;Ativo&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>`).join('') || '&lt;p style="color:var(--gray);"&gt;Sem anúncios&lt;/p&gt;';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>updateMLStatus();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Mercado Livre Integration ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function connectMercadoLivre() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const clientId = prompt('Digite seu Client ID do Mercado Livre:');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const clientSecret = prompt('Digite seu Client Secret:');</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (!clientId || !clientSecret) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>showToast('Credenciais necessárias para conectar', 'error');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Salvar credenciais (em produção, usar backend seguro)</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>state.mlClientId = clientId;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>state.mlClientSecret = clientSecret;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>saveState();</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Redirecionar para OAuth do ML</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const redirectUri = encodeURIComponent(window.location.origin + '/ml-callback');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const authUrl = `https://auth.mercadolibre.com.br/authorization?response_type=code&amp;client_id=${clientId}&amp;redirect_uri=${redirectUri}&amp;state=${btoa(JSON.stringify({id:clientId,sec:clientSecret}))}`;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>window.location.href = authUrl;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function checkMLCallback() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const params = new URLSearchParams(window.location.search);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const tokenData = params.get('ml_token');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const error = params.get('ml_error');</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (error) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>showToast(`Erro ML: ${decodeURIComponent(error)}`, 'error');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>history.replaceState({}, '', window.location.pathname);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (tokenData) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>try {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>const token = JSON.parse(decodeURIComponent(tokenData));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>state.mlToken = token;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>state.mlConnected = true;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>state.userName = token.user_name || state.storeName;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>saveState();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>showToast(`Conectado como ${token.user_name}! 🎉`, 'success');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>updateMLStatus();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>history.replaceState({}, '', window.location.pathname);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>} catch (e) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>showToast('Erro ao processar token', 'error');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function updateMLStatus() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const status = document.getElementById('mlStatus');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (state.mlConnected &amp;&amp; state.mlToken) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>status.textContent = `✅ Conectado (${state.mlToken.user_name})`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>status.style.color = 'var(--success)';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>} else {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>status.textContent = '❌ Não conectado';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>status.style.color = 'var(--danger)';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function disconnectMercadoLivre() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (confirm('Desconectar do Mercado Livre?')) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>state.mlConnected = false;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>state.mlToken = null;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>saveState();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>updateMLStatus();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>showToast('Desconectado', 'success');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Listings ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function renderListings() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const tbody = document.getElementById('listingsTable');</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (state.listings.length === 0) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>tbody.innerHTML = `</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;td colspan="5" class="text-center" style="padding:40px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div class="empty"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="empty-icon"&gt;📦&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p&gt;Nenhum anúncio encontrado&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button class="btn btn-primary mt-2" onclick="openNewListingModal()"&gt;Criar primeiro anúncio&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>tbody.innerHTML = state.listings.map((l, i) =&gt; `</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;strong&gt;${l.title}&lt;/strong&gt;&lt;br&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;small style="color:var(--gray);"&gt;${l.category || 'Sem categoria'}&lt;/small&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;td&gt;R$ ${parseFloat(l.price).toFixed(2)}&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;td&gt;${l.stock}&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;td&gt;&lt;span class="badge badge-success"&gt;Ativo&lt;/span&gt;&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-sm btn-outline" onclick="editListing(${i})"&gt;✏️&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-sm btn-outline" style="color:var(--danger);" onclick="deleteListing(${i})"&gt;🗑️&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/td&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/tr&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>`).join('');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function openNewListingModal() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingTitle').value = '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingPrice').value = '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingStock').value = '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingCategory').value = '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingDescription').value = '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('newListingModal').classList.add('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function saveListing() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const title = document.getElementById('listingTitle').value.trim();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const price = parseFloat(document.getElementById('listingPrice').value);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const stock = parseInt(document.getElementById('listingStock').value);</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (!title || isNaN(price) || isNaN(stock)) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>showToast('Preencha todos os campos obrigatórios', 'error');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const listing = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>id: Date.now(),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>title,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>price,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>stock,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>category: document.getElementById('listingCategory').value,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>description: document.getElementById('listingDescription').value.trim(),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>createdAt: new Date().toISOString(),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>status: 'active'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>};</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>state.listings.unshift(listing);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>saveState();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>closeModal('newListingModal');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>renderListings();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>updateDashboard();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>showToast('Anúncio salvo com sucesso! ✅', 'success');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function editListing(index) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const l = state.listings[index];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingTitle').value = l.title;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingPrice').value = l.price;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingStock').value = l.stock;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingCategory').value = l.category || '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('listingDescription').value = l.description || '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('newListingModal').classList.add('active');</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Remover antigo e salvar como novo ao editar</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.querySelector('#newListingModal .btn-primary').onclick = () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>state.listings.splice(index, 1);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>saveListing();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>};</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function deleteListing(index) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (confirm('Excluir este anúncio?')) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>state.listings.splice(index, 1);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>saveState();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>renderListings();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>updateDashboard();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>showToast('Anúncio excluído', 'success');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Stock ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function renderStock() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const container = document.getElementById('stockList');</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (state.stock.length === 0) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>container.innerHTML = `</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="empty"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="empty-icon"&gt;🏭&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;Estoque vazio&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-primary mt-2" onclick="openStockModal()"&gt;Adicionar produto&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Agrupar por produto</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const grouped = {};</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>state.stock.forEach(s =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if (!grouped[s.productId]) grouped[s.productId] = { product: s.product, quantity: 0, movements: [] };</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>grouped[s.productId].quantity += s.type === 'entrada' ? s.quantity : -s.quantity;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>grouped[s.productId].movements.push(s);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>});</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>container.innerHTML = Object.values(grouped).map(g =&gt; `</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div style="padding:16px; border:1px solid var(--border); border-radius:8px; margin-bottom:12px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;strong&gt;${g.product}&lt;/strong&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;span class="badge ${g.quantity &gt; 10 ? 'badge-success' : g.quantity &gt; 0 ? 'badge-warning' : 'badge-danger'}"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>${g.quantity} unidades</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;small style="color:var(--gray);"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>${g.movements.length} movimento${g.movements.length &gt; 1 ? 's' : ''}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/small&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>`).join('');</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Atualizar select do modal</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const select = document.getElementById('stockProduct');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>select.innerHTML = '&lt;option value=""&gt;Selecione...&lt;/option&gt;' +<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>state.listings.map(l =&gt; `&lt;option value="${l.id}"&gt;${l.title}&lt;/option&gt;`).join('');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function openStockModal() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (state.listings.length === 0) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>showToast('Crie um anúncio primeiro', 'error');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('stockQuantity').value = '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('stockType').value = 'entrada';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('stockModal').classList.add('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function updateStock() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const productId = document.getElementById('stockProduct').value;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const quantity = parseInt(document.getElementById('stockQuantity').value);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const type = document.getElementById('stockType').value;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (!productId || isNaN(quantity) || quantity &lt;= 0) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>showToast('Preencha os campos corretamente', 'error');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const product = state.listings.find(l =&gt; l.id == productId);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (!product) return;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>state.stock.push({</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>id: Date.now(),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>productId,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>product: product.title,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>quantity,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>type,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>date: new Date().toISOString()</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>});</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>saveState();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>closeModal('stockModal');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>renderStock();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>updateDashboard();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>showToast('Estoque atualizado! ✅', 'success');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Messages ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function renderMessages() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const container = document.getElementById('messagesList');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('messagesCount').textContent = `${state.messages.length} nova${state.messages.length !== 1 ? 's' : ''}`;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (state.messages.length === 0) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>container.innerHTML = `</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div class="empty"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="empty-icon"&gt;💬&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;Nenhuma mensagem&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>container.innerHTML = state.messages.map(m =&gt; `</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div style="padding:16px; border-bottom:1px solid var(--border);"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div style="display:flex; justify-content:space-between; margin-bottom:8px;"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;strong&gt;${m.from}&lt;/strong&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;small style="color:var(--gray);"&gt;${new Date(m.date).toLocaleDateString()}&lt;/small&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;p style="margin-bottom:8px;"&gt;${m.text}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-sm btn-primary" onclick="replyMessage('${m.id}')"&gt;Responder&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>`).join('');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function replyMessage(id) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const msg = state.messages.find(m =&gt; m.id === id);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (msg) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const reply = prompt(`Responder para ${msg.from}:`);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if (reply) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>showToast('Resposta enviada! (simulação)', 'success');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Modals ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function closeModal(modalId) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById(modalId).classList.remove('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Resetar botão de salvar para comportamento padrão</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (modalId === 'newListingModal') {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.querySelector('#newListingModal .btn-primary').onclick = saveListing;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Toast ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function showToast(message, type = 'info') {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const toast = document.getElementById('toast');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>toast.textContent = message;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>toast.className = `toast ${type} active`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setTimeout(() =&gt; toast.classList.remove('active'), 4000);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Utils ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function setupEventListeners() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Fechar modal ao clicar fora</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.querySelectorAll('.modal').forEach(modal =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>modal.addEventListener('click', (e) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>if (e.target === modal) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>modal.classList.remove('active');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>});</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// Enter em inputs do modal</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.querySelectorAll('.modal input, .modal textarea').forEach(input =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>input.addEventListener('keypress', (e) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>if (e.key === 'Enter' &amp;&amp; !e.shiftKey) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>e.preventDefault();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const modal = e.target.closest('.modal');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const saveBtn = modal.querySelector('.btn-primary');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if (saveBtn) saveBtn.click();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function showSettings() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>document.getElementById('settingsStoreName').value = state.storeName;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>showSection('settings');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function showFirebaseSetup() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>showToast('Funcionalidade de nuvem em desenvolvimento 🔧', 'info');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function showHelp() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>alert('💡 Dica: Para conectar com o Mercado Livre:\n\n1. Acesse developers.mercadolibre.com.br\n2. Crie uma aplicação\n3. Copie Client ID e Secret\n4. Use o botão "Conectar ML" nas configurações\n\nPrecisa de mais ajuda? Acesse nossa documentação!');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function refreshData() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>showToast('Dados atualizados! 🔄', 'success');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>updateDashboard();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function exportData() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const data = JSON.stringify(state, null, 2);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const blob = new Blob([data], { type: 'application/json' });</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const url = URL.createObjectURL(blob);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const a = document.createElement('a');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>a.href = url;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>a.download = `sellhub-backup-${new Date().toISOString().split('T')[0]}.json`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>a.click();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>URL.revokeObjectURL(url);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>showToast('Dados exportados! 📥', 'success');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>function clearData() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (confirm('⚠️ Isso apagará TODOS os seus dados locais. Continuar?')) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>localStorage.removeItem('sellhub_state');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>location.reload();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// ── Keyboard Shortcuts ──</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>document.addEventListener('keydown', (e) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (e.key === 'Escape') {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.querySelectorAll('.modal.active').forEach(m =&gt; m.classList.remove('active'));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (e.ctrlKey &amp;&amp; e.key === 'n') {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>e.preventDefault();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>openNewListingModal();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+
+  <!-- Auth Screen -->
+  <div id="authScreen" class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">🛒</div>
+      <h1 class="auth-title">SellHub</h1>
+      <p class="auth-subtitle">Gestão inteligente para Mercado Livre</p>
+      
+      <div class="auth-form">
+        <div class="form-group">
+          <label class="form-label">Nome da sua loja</label>
+          <input type="text" id="storeName" class="form-control" placeholder="Ex: Minha Loja Top" />
+        </div>
+        
+        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="handleLogin()">
+          🚀 Entrar agora
+        </button>
+        
+        <div class="mt-4">
+          <button class="btn btn-outline" style="width:100%; justify-content:center;" onclick="showFirebaseSetup()">
+            ☁️ Sincronizar na nuvem
+          </button>
+        </div>
+      </div>
+      
+      <p class="auth-footer">
+        ✅ Dados salvos no navegador • Funciona offline<br>
+        <a href="#" onclick="showHelp()">Precisa de ajuda?</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="appScreen" class="hidden">
+    
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">🛒</span>
+        <span>SellHub</span>
+      </div>
+      <div class="user-menu">
+        <span id="userName" style="font-weight:500;"></span>
+        <div class="user-avatar" onclick="showSettings()" title="Configurações">⚙️</div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="container">
+      <div class="nav">
+        <div class="nav-item active" onclick="showSection('dashboard')">📊 Dashboard</div>
+        <div class="nav-item" onclick="showSection('listings')">📦 Anúncios</div>
+        <div class="nav-item" onclick="showSection('stock')">🏭 Estoque</div>
+        <div class="nav-item" onclick="showSection('messages')">💬 Mensagens</div>
+        <div class="nav-item" onclick="showSection('finance')">💰 Financeiro</div>
+        <div class="nav-item" onclick="showSection('settings')">⚙️ Config</div>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="container">
+      
+      <!-- Dashboard -->
+      <section id="dashboard" class="section active">
+        <div class="grid grid-4">
+          <div class="card stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-value" id="statListings">0</div>
+            <div class="stat-label">Anúncios Ativos</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon">💬</div>
+            <div class="stat-value" id="statMessages">0</div>
+            <div class="stat-label">Mensagens</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon">🏭</div>
+            <div class="stat-value" id="statStock">0</div>
+            <div class="stat-label">Produtos em Estoque</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-value" id="statRating">4.8</div>
+            <div class="stat-label">Avaliação Média</div>
+          </div>
+        </div>
+
+        <div class="grid grid-2 mt-4">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🔔 Atividades Recentes</span>
+              <button class="btn btn-sm btn-outline" onclick="refreshData()">🔄 Atualizar</button>
+            </div>
+            <div class="card-body">
+              <div id="activitiesList">
+                <div class="empty">
+                  <div class="empty-icon">📭</div>
+                  <p>Nenhuma atividade recente</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">⚡ Ações Rápidas</span>
+            </div>
+            <div class="card-body">
+              <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 12px;">
+                <button class="btn btn-primary" onclick="openNewListingModal()">📦 Novo Anúncio</button>
+                <button class="btn btn-success" onclick="showSection('messages')">💬 Ver Mensagens</button>
+                <button class="btn btn-outline" onclick="openStockModal()">🏭 Gerenciar Estoque</button>
+                <button class="btn btn-outline" onclick="connectMercadoLivre()">🔗 Conectar ML</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Listings -->
+      <section id="listings" class="section hidden">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📦 Meus Anúncios</span>
+            <button class="btn btn-primary btn-sm" onclick="openNewListingModal()">+ Novo</button>
+          </div>
+          <div class="card-body">
+            <div style="overflow-x:auto;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="listingsTable">
+                  <tr>
+                    <td colspan="5" class="text-center" style="padding:40px;">
+                      <div class="empty">
+                        <div class="empty-icon">📦</div>
+                        <p>Nenhum anúncio encontrado</p>
+                        <button class="btn btn-primary mt-2" onclick="openNewListingModal()">Criar primeiro anúncio</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stock -->
+      <section id="stock" class="section hidden">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏭 Controle de Estoque</span>
+            <button class="btn btn-primary btn-sm" onclick="openStockModal()">+ Adicionar</button>
+          </div>
+          <div class="card-body">
+            <div id="stockList">
+              <div class="empty">
+                <div class="empty-icon">🏭</div>
+                <p>Estoque vazio</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Messages -->
+      <section id="messages" class="section hidden">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">💬 Mensagens</span>
+            <span class="badge badge-info" id="messagesCount">0 novas</span>
+          </div>
+          <div class="card-body">
+            <div id="messagesList">
+              <div class="empty">
+                <div class="empty-icon">💬</div>
+                <p>Nenhuma mensagem</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Finance -->
+      <section id="finance" class="section hidden">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">💰 Resumo Financeiro</span>
+          </div>
+          <div class="card-body">
+            <div class="grid grid-3">
+              <div class="stat-card" style="background:var(--light); border-radius:12px;">
+                <div class="stat-value" style="color:var(--success);">R$ 0,00</div>
+                <div class="stat-label">Vendas Hoje</div>
+              </div>
+              <div class="stat-card" style="background:var(--light); border-radius:12px;">
+                <div class="stat-value" style="color:var(--primary);">R$ 0,00</div>
+                <div class="stat-label">Vendas Mês</div>
+              </div>
+              <div class="stat-card" style="background:var(--light); border-radius:12px;">
+                <div class="stat-value" style="color:var(--warning);">R$ 0,00</div>
+                <div class="stat-label">A Receber</div>
+              </div>
+            </div>
+            <div class="mt-4 empty">
+              <p>Conecte sua conta do Mercado Livre para ver dados financeiros</p>
+              <button class="btn btn-primary mt-2" onclick="connectMercadoLivre()">🔗 Conectar Agora</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="section hidden">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">⚙️ Configurações</span>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Nome da Loja</label>
+              <input type="text" id="settingsStoreName" class="form-control" />
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Mercado Livre</label>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn btn-primary" onclick="connectMercadoLivre()">🔗 Conectar Conta</button>
+                <button class="btn btn-outline" onclick="disconnectMercadoLivre()">🔌 Desconectar</button>
+              </div>
+              <small style="color:var(--gray); display:block; margin-top:6px;">
+                Status: <span id="mlStatus">Não conectado</span>
+              </small>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Dados</label>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn btn-outline" onclick="exportData()">📥 Exportar Dados</button>
+                <button class="btn btn-outline" onclick="clearData()">🗑️ Limpar Dados</button>
+              </div>
+            </div>
+            
+            <hr style="margin:20px 0; border:none; border-top:1px solid var(--border);"/>
+            
+            <button class="btn btn-danger" onclick="logout()" style="width:100%;">🚪 Sair</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- New Listing Modal -->
+  <div id="newListingModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>📦 Novo Anúncio</h3>
+        <button class="modal-close" onclick="closeModal('newListingModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Título do Produto *</label>
+          <input type="text" id="listingTitle" class="form-control" placeholder="Ex: Camiseta Básica Algodão" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Preço (R$) *</label>
+            <input type="number" id="listingPrice" class="form-control" step="0.01" placeholder="0.00" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Estoque *</label>
+            <input type="number" id="listingStock" class="form-control" placeholder="0" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categoria</label>
+          <select id="listingCategory" class="form-control">
+            <option value="">Selecione...</option>
+            <option value="roupas">Roupas e Acessórios</option>
+            <option value="eletronicos">Eletrônicos</option>
+            <option value="casa">Casa e Decoração</option>
+            <option value="esportes">Esportes e Lazer</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descrição</label>
+          <textarea id="listingDescription" class="form-control" rows="4" placeholder="Descreva seu produto..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('newListingModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveListing()">💾 Salvar Anúncio</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stock Modal -->
+  <div id="stockModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🏭 Gerenciar Estoque</h3>
+        <button class="modal-close" onclick="closeModal('stockModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Produto</label>
+          <select id="stockProduct" class="form-control">
+            <option value="">Selecione...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantidade</label>
+          <input type="number" id="stockQuantity" class="form-control" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de Movimento</label>
+          <select id="stockType" class="form-control">
+            <option value="entrada">➕ Entrada (compra)</option>
+            <option value="saida">➖ Saída (venda)</option>
+            <option value="ajuste">🔧 Ajuste manual</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('stockModal')">Cancelar</button>
+        <button class="btn btn-success" onclick="updateStock()">✅ Atualizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>⚙️ Configurações</h3>
+        <button class="modal-close" onclick="closeModal('settingsModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--gray); margin-bottom:16px;">
+          Configure sua integração com o Mercado Livre para sincronizar dados automaticamente.
+        </p>
+        <div class="form-group">
+          <label class="form-label">Client ID do Mercado Livre</label>
+          <input type="text" id="mlClientId" class="form-control" placeholder="APP-XXXXXXXX-XXXXXXXX" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Client Secret</label>
+          <input type="password" id="mlClientSecret" class="form-control" placeholder="••••••••••••••••" />
+        </div>
+        <small style="color:var(--gray);">
+          💡 Obtenha suas credenciais em: 
+          <a href="https://developers.mercadolibre.com.br" target="_blank">developers.mercadolibre.com.br</a>
+        </small>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('settingsModal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveMLCredentials()">💾 Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Loading -->
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando...</p>
+  </div>
+
+  <script>
+    // ── Estado Global ──
+    let state = {
+      storeName: '',
+      userName: '',
+      mlConnected: false,
+      mlToken: null,
+      listings: [],
+      stock: [],
+      messages: [],
+    };
+
+    // ── Inicialização ──
+    document.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      checkAuth();
+      setupEventListeners();
+      checkMLCallback();
+    });
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem('sellhub_state');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          state = { ...state, ...parsed };
+        }
+      } catch (e) {
+        console.error('Erro ao carregar estado:', e);
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('sellhub_state', JSON.stringify(state));
+      } catch (e) {
+        console.error('Erro ao salvar estado:', e);
+      }
+    }
+
+    function checkAuth() {
+      if (state.storeName) {
+        document.getElementById('authScreen').classList.add('hidden');
+        document.getElementById('appScreen').classList.remove('hidden');
+        document.getElementById('userName').textContent = state.userName || state.storeName;
+        document.getElementById('settingsStoreName').value = state.storeName;
+        updateDashboard();
+      }
+    }
+
+    function handleLogin() {
+      const storeName = document.getElementById('storeName').value.trim();
+      if (!storeName) {
+        showToast('Digite o nome da sua loja', 'error');
+        return;
+      }
+      state.storeName = storeName;
+      state.userName = storeName;
+      saveState();
+      checkAuth();
+      showToast('Bem-vindo ao SellHub! 🎉', 'success');
+    }
+
+    function logout() {
+      if (confirm('Deseja realmente sair?')) {
+        localStorage.removeItem('sellhub_state');
+        location.reload();
+      }
+    }
+
+    // ── Navegação ──
+    function showSection(sectionId) {
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById(sectionId).classList.remove('hidden');
+      event.target.classList.add('active');
+      
+      if (sectionId === 'dashboard') updateDashboard();
+      if (sectionId === 'listings') renderListings();
+      if (sectionId === 'stock') renderStock();
+      if (sectionId === 'messages') renderMessages();
+    }
+
+    // ── Dashboard ──
+    function updateDashboard() {
+      document.getElementById('statListings').textContent = state.listings.length;
+      document.getElementById('statMessages').textContent = state.messages.length;
+      document.getElementById('statStock').textContent = state.stock.reduce((sum, s) => sum + (s.quantity || 0), 0);
+      
+      const activities = document.getElementById('activitiesList');
+      if (state.listings.length === 0 && state.messages.length === 0) {
+        activities.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">📭</div>
+            <p>Nenhuma atividade recente</p>
+            <button class="btn btn-primary mt-2" onclick="openNewListingModal()">Criar primeiro anúncio</button>
+          </div>
+        `;
+      } else {
+        activities.innerHTML = state.listings.slice(0, 5).map(l => `
+          <div style="padding:12px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px;">
+            <span style="font-size:20px;">📦</span>
+            <div style="flex:1;">
+              <div style="font-weight:500;">${l.title}</div>
+              <small style="color:var(--gray);">R$ ${l.price} • Estoque: ${l.stock}</small>
+            </div>
+            <span class="badge badge-success">Ativo</span>
+          </div>
+        `).join('') || '<p style="color:var(--gray);">Sem anúncios</p>';
+      }
+      
+      updateMLStatus();
+    }
+
+    // ── Mercado Livre Integration ──
+    function connectMercadoLivre() {
+      const clientId = prompt('Digite seu Client ID do Mercado Livre:');
+      const clientSecret = prompt('Digite seu Client Secret:');
+      
+      if (!clientId || !clientSecret) {
+        showToast('Credenciais necessárias para conectar', 'error');
+        return;
+      }
+      
+      // Salvar credenciais (em produção, usar backend seguro)
+      state.mlClientId = clientId;
+      state.mlClientSecret = clientSecret;
+      saveState();
+      
+      // Redirecionar para OAuth do ML
+      const redirectUri = encodeURIComponent(window.location.origin + '/ml-callback');
+      const authUrl = `https://auth.mercadolibre.com.br/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${btoa(JSON.stringify({id:clientId,sec:clientSecret}))}`;
+      
+      window.location.href = authUrl;
+    }
+
+    function checkMLCallback() {
+      const params = new URLSearchParams(window.location.search);
+      const tokenData = params.get('ml_token');
+      const error = params.get('ml_error');
+      
+      if (error) {
+        showToast(`Erro ML: ${decodeURIComponent(error)}`, 'error');
+        history.replaceState({}, '', window.location.pathname);
+        return;
+      }
+      
+      if (tokenData) {
+        try {
+          const token = JSON.parse(decodeURIComponent(tokenData));
+          state.mlToken = token;
+          state.mlConnected = true;
+          state.userName = token.user_name || state.storeName;
+          saveState();
+          showToast(`Conectado como ${token.user_name}! 🎉`, 'success');
+          updateMLStatus();
+          history.replaceState({}, '', window.location.pathname);
+        } catch (e) {
+          showToast('Erro ao processar token', 'error');
+        }
+      }
+    }
+
+    function updateMLStatus() {
+      const status = document.getElementById('mlStatus');
+      if (state.mlConnected && state.mlToken) {
+        status.textContent = `✅ Conectado (${state.mlToken.user_name})`;
+        status.style.color = 'var(--success)';
+      } else {
+        status.textContent = '❌ Não conectado';
+        status.style.color = 'var(--danger)';
+      }
+    }
+
+    function disconnectMercadoLivre() {
+      if (confirm('Desconectar do Mercado Livre?')) {
+        state.mlConnected = false;
+        state.mlToken = null;
+        saveState();
+        updateMLStatus();
+        showToast('Desconectado', 'success');
+      }
+    }
+
+    // ── Listings ──
+    function renderListings() {
+      const tbody = document.getElementById('listingsTable');
+      
+      if (state.listings.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="text-center" style="padding:40px;">
+              <div class="empty">
+                <div class="empty-icon">📦</div>
+                <p>Nenhum anúncio encontrado</p>
+                <button class="btn btn-primary mt-2" onclick="openNewListingModal()">Criar primeiro anúncio</button>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      tbody.innerHTML = state.listings.map((l, i) => `
+        <tr>
+          <td>
+            <strong>${l.title}</strong><br>
+            <small style="color:var(--gray);">${l.category || 'Sem categoria'}</small>
+          </td>
+          <td>R$ ${parseFloat(l.price).toFixed(2)}</td>
+          <td>${l.stock}</td>
+          <td><span class="badge badge-success">Ativo</span></td>
+          <td>
+            <button class="btn btn-sm btn-outline" onclick="editListing(${i})">✏️</button>
+            <button class="btn btn-sm btn-outline" style="color:var(--danger);" onclick="deleteListing(${i})">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openNewListingModal() {
+      document.getElementById('listingTitle').value = '';
+      document.getElementById('listingPrice').value = '';
+      document.getElementById('listingStock').value = '';
+      document.getElementById('listingCategory').value = '';
+      document.getElementById('listingDescription').value = '';
+      document.getElementById('newListingModal').classList.add('active');
+    }
+
+    function saveListing() {
+      const title = document.getElementById('listingTitle').value.trim();
+      const price = parseFloat(document.getElementById('listingPrice').value);
+      const stock = parseInt(document.getElementById('listingStock').value);
+      
+      if (!title || isNaN(price) || isNaN(stock)) {
+        showToast('Preencha todos os campos obrigatórios', 'error');
+        return;
+      }
+      
+      const listing = {
+        id: Date.now(),
+        title,
+        price,
+        stock,
+        category: document.getElementById('listingCategory').value,
+        description: document.getElementById('listingDescription').value.trim(),
+        createdAt: new Date().toISOString(),
+        status: 'active'
+      };
+      
+      state.listings.unshift(listing);
+      saveState();
+      closeModal('newListingModal');
+      renderListings();
+      updateDashboard();
+      showToast('Anúncio salvo com sucesso! ✅', 'success');
+    }
+
+    function editListing(index) {
+      const l = state.listings[index];
+      document.getElementById('listingTitle').value = l.title;
+      document.getElementById('listingPrice').value = l.price;
+      document.getElementById('listingStock').value = l.stock;
+      document.getElementById('listingCategory').value = l.category || '';
+      document.getElementById('listingDescription').value = l.description || '';
+      document.getElementById('newListingModal').classList.add('active');
+      
+      // Remover antigo e salvar como novo ao editar
+      document.querySelector('#newListingModal .btn-primary').onclick = () => {
+        state.listings.splice(index, 1);
+        saveListing();
+      };
+    }
+
+    function deleteListing(index) {
+      if (confirm('Excluir este anúncio?')) {
+        state.listings.splice(index, 1);
+        saveState();
+        renderListings();
+        updateDashboard();
+        showToast('Anúncio excluído', 'success');
+      }
+    }
+
+    // ── Stock ──
+    function renderStock() {
+      const container = document.getElementById('stockList');
+      
+      if (state.stock.length === 0) {
+        container.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">🏭</div>
+            <p>Estoque vazio</p>
+            <button class="btn btn-primary mt-2" onclick="openStockModal()">Adicionar produto</button>
+          </div>
+        `;
+        return;
+      }
+      
+      // Agrupar por produto
+      const grouped = {};
+      state.stock.forEach(s => {
+        if (!grouped[s.productId]) grouped[s.productId] = { product: s.product, quantity: 0, movements: [] };
+        grouped[s.productId].quantity += s.type === 'entrada' ? s.quantity : -s.quantity;
+        grouped[s.productId].movements.push(s);
+      });
+      
+      container.innerHTML = Object.values(grouped).map(g => `
+        <div style="padding:16px; border:1px solid var(--border); border-radius:8px; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong>${g.product}</strong>
+            <span class="badge ${g.quantity > 10 ? 'badge-success' : g.quantity > 0 ? 'badge-warning' : 'badge-danger'}">
+              ${g.quantity} unidades
+            </span>
+          </div>
+          <small style="color:var(--gray);">
+            ${g.movements.length} movimento${g.movements.length > 1 ? 's' : ''}
+          </small>
+        </div>
+      `).join('');
+      
+      // Atualizar select do modal
+      const select = document.getElementById('stockProduct');
+      select.innerHTML = '<option value="">Selecione...</option>' + 
+        state.listings.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
+    }
+
+    function openStockModal() {
+      if (state.listings.length === 0) {
+        showToast('Crie um anúncio primeiro', 'error');
+        return;
+      }
+      document.getElementById('stockQuantity').value = '';
+      document.getElementById('stockType').value = 'entrada';
+      document.getElementById('stockModal').classList.add('active');
+    }
+
+    function updateStock() {
+      const productId = document.getElementById('stockProduct').value;
+      const quantity = parseInt(document.getElementById('stockQuantity').value);
+      const type = document.getElementById('stockType').value;
+      
+      if (!productId || isNaN(quantity) || quantity <= 0) {
+        showToast('Preencha os campos corretamente', 'error');
+        return;
+      }
+      
+      const product = state.listings.find(l => l.id == productId);
+      if (!product) return;
+      
+      state.stock.push({
+        id: Date.now(),
+        productId,
+        product: product.title,
+        quantity,
+        type,
+        date: new Date().toISOString()
+      });
+      
+      saveState();
+      closeModal('stockModal');
+      renderStock();
+      updateDashboard();
+      showToast('Estoque atualizado! ✅', 'success');
+    }
+
+    // ── Messages ──
+    function renderMessages() {
+      const container = document.getElementById('messagesList');
+      document.getElementById('messagesCount').textContent = `${state.messages.length} nova${state.messages.length !== 1 ? 's' : ''}`;
+      
+      if (state.messages.length === 0) {
+        container.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">💬</div>
+            <p>Nenhuma mensagem</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = state.messages.map(m => `
+        <div style="padding:16px; border-bottom:1px solid var(--border);">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <strong>${m.from}</strong>
+            <small style="color:var(--gray);">${new Date(m.date).toLocaleDateString()}</small>
+          </div>
+          <p style="margin-bottom:8px;">${m.text}</p>
+          <button class="btn btn-sm btn-primary" onclick="replyMessage('${m.id}')">Responder</button>
+        </div>
+      `).join('');
+    }
+
+    function replyMessage(id) {
+      const msg = state.messages.find(m => m.id === id);
+      if (msg) {
+        const reply = prompt(`Responder para ${msg.from}:`);
+        if (reply) {
+          showToast('Resposta enviada! (simulação)', 'success');
+        }
+      }
+    }
+
+    // ── Modals ──
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+      // Resetar botão de salvar para comportamento padrão
+      if (modalId === 'newListingModal') {
+        document.querySelector('#newListingModal .btn-primary').onclick = saveListing;
+      }
+    }
+
+    // ── Toast ──
+    function showToast(message, type = 'info') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} active`;
+      setTimeout(() => toast.classList.remove('active'), 4000);
+    }
+
+    // ── Utils ──
+    function setupEventListeners() {
+      // Fechar modal ao clicar fora
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('active');
+          }
+        });
+      });
+      
+      // Enter em inputs do modal
+      document.querySelectorAll('.modal input, .modal textarea').forEach(input => {
+        input.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            const modal = e.target.closest('.modal');
+            const saveBtn = modal.querySelector('.btn-primary');
+            if (saveBtn) saveBtn.click();
+          }
+        });
+      });
+    }
+
+    function showSettings() {
+      document.getElementById('settingsStoreName').value = state.storeName;
+      showSection('settings');
+    }
+
+    function showFirebaseSetup() {
+      showToast('Funcionalidade de nuvem em desenvolvimento 🔧', 'info');
+    }
+
+    function showHelp() {
+      alert('💡 Dica: Para conectar com o Mercado Livre:\n\n1. Acesse developers.mercadolibre.com.br\n2. Crie uma aplicação\n3. Copie Client ID e Secret\n4. Use o botão "Conectar ML" nas configurações\n\nPrecisa de mais ajuda? Acesse nossa documentação!');
+    }
+
+    function refreshData() {
+      showToast('Dados atualizados! 🔄', 'success');
+      updateDashboard();
+    }
+
+    function exportData() {
+      const data = JSON.stringify(state, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `sellhub-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Dados exportados! 📥', 'success');
+    }
+
+    function clearData() {
+      if (confirm('⚠️ Isso apagará TODOS os seus dados locais. Continuar?')) {
+        localStorage.removeItem('sellhub_state');
+        location.reload();
+      }
+    }
+
+    // ── Keyboard Shortcuts ──
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+      }
+      if (e.ctrlKey && e.key === 'n') {
+        e.preventDefault();
+        openNewListingModal();
+      }
+    });
+  </script>
 </body>
 </html>
