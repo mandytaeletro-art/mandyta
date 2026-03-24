@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#fff159"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff159">
   <title>SellHub - Gestão Mercado Livre</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
@@ -20,123 +20,60 @@
       --shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
     body { background: var(--light); color: #333; line-height: 1.5; }
-    
-    /* Header */
-    .header { background: linear-gradient(135deg, var(--secondary) 0%, #ffe600 100%); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+    .header { background: linear-gradient(135deg, var(--secondary) 0%, #ffe600 100%); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow); }
     .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: var(--primary); }
-    .logo-icon { font-size: 24px; }
-    .user-menu { display: flex; align-items: center; gap: 12px; }
-    .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; cursor: pointer; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
     .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
     .btn-primary { background: var(--primary); color: white; }
     .btn-primary:hover { background: #1e2150; }
     .btn-success { background: var(--success); color: white; }
-    .btn-success:hover { background: #008a42; }
     .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-    .btn-outline:hover { background: var(--primary); color: white; }
-    .btn-sm { padding: 6px 12px; font-size: 14px; }
-    
-    /* Layout */
-    .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-    .grid { display: grid; gap: 20px; }
-    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-    
-    /* Cards */
-    .card { background: white; border-radius: 12px; padding: 20px; box-shadow: var(--shadow); }
-    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .card { background: white; border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
     .card-title { font-weight: 600; font-size: 18px; color: var(--primary); }
-    .card-body { color: #555; }
-    
-    /* Stats */
+    .nav { display: flex; gap: 4px; background: white; padding: 8px; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 20px; overflow-x: auto; }
+    .nav-item { padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; white-space: nowrap; }
+    .nav-item:hover { background: var(--light); }
+    .nav-item.active { background: var(--primary); color: white; }
+    .grid { display: grid; gap: 20px; }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
     .stat-card { text-align: center; padding: 24px 16px; }
     .stat-value { font-size: 32px; font-weight: 700; color: var(--primary); margin: 8px 0; }
     .stat-label { color: var(--gray); font-size: 14px; }
     .stat-icon { font-size: 32px; margin-bottom: 8px; }
-    
-    /* Navigation */
-    .nav { display: flex; gap: 4px; background: white; padding: 8px; border-radius: 12px; box-shadow: var(--shadow); overflow-x: auto; margin-bottom: 20px; }
-    .nav-item { padding: 10px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; white-space: nowrap; transition: all 0.2s; }
-    .nav-item:hover { background: var(--light); }
-    .nav-item.active { background: var(--primary); color: white; }
-    
-    /* Tables */
-    .table { width: 100%; border-collapse: collapse; }
-    .table th { text-align: left; padding: 12px 16px; background: var(--light); font-weight: 600; color: var(--gray); font-size: 13px; text-transform: uppercase; }
-    .table td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
-    .table tr:hover { background: #fafafa; }
-    .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-    .badge-success { background: #d4edda; color: #155724; }
-    .badge-warning { background: #fff3cd; color: #856404; }
-    .badge-danger { background: #f8d7da; color: #721c24; }
-    .badge-info { background: #d1ecf1; color: #0c5460; }
-    
-    /* Forms */
     .form-group { margin-bottom: 16px; }
-    .form-label { display: block; margin-bottom: 6px; font-weight: 500; color: #555; }
-    .form-control { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; transition: border-color 0.2s; }
-    .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,50,119,0.1); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    
-    /* Modal */
+    .form-label { display: block; margin-bottom: 6px; font-weight: 500; }
+    .form-control { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; }
+    .form-control:focus { outline: none; border-color: var(--primary); }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
     .modal.active { display: flex; }
     .modal-content { background: white; border-radius: 16px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }
-    .modal-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .modal-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
     .modal-body { padding: 20px; }
     .modal-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
-    .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); }
-    
-    /* Auth Screen */
-    .auth-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    .auth-card { background: white; border-radius: 20px; padding: 40px; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-    .auth-logo { font-size: 48px; margin-bottom: 16px; }
-    .auth-title { font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
-    .auth-subtitle { color: var(--gray); margin-bottom: 24px; }
-    .auth-form { text-align: left; }
-    .auth-footer { margin-top: 20px; color: var(--gray); font-size: 14px; }
-    .auth-footer a { color: var(--primary); text-decoration: none; }
-    
-    /* Empty State */
-    .empty { text-align: center; padding: 40px 20px; color: var(--gray); }
-    .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
-    
-    /* Loading */
-    .loading { display: none; text-align: center; padding: 20px; }
-    .loading.active { display: block; }
-    .spinner { width: 40px; height: 40px; border: 4px solid var(--light); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    
-    /* Toast */
-    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--dark); color: white; padding: 14px 20px; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: none; z-index: 2000; animation: slideIn 0.3s ease; }
+    .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; }
+    .hidden { display: none !important; }
+    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--dark); color: white; padding: 14px 20px; border-radius: 10px; display: none; z-index: 2000; }
     .toast.active { display: block; }
     .toast.success { background: var(--success); }
     .toast.error { background: var(--danger); }
-    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    
-    /* Responsive */
+    .auth-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .auth-card { background: white; border-radius: 20px; padding: 40px; max-width: 420px; width: 100%; text-align: center; }
+    .auth-logo { font-size: 48px; margin-bottom: 16px; }
+    .auth-title { font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .auth-subtitle { color: var(--gray); margin-bottom: 24px; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .badge-success { background: #d4edda; color: #155724; }
+    .badge-warning { background: #fff3cd; color: #856404; }
+    .table { width: 100%; border-collapse: collapse; }
+    .table th { text-align: left; padding: 12px; background: var(--light); font-weight: 600; }
+    .table td { padding: 12px; border-bottom: 1px solid var(--border); }
+    .empty { text-align: center; padding: 40px; color: var(--gray); }
+    .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
     @media (max-width: 768px) {
-      .header { padding: 12px 16px; }
-      .logo { font-size: 18px; }
-      .form-row { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: 1fr; }
       .nav { padding: 4px; }
-      .nav-item { padding: 8px 12px; font-size: 14px; }
     }
-    
-    /* Utilities */
-    .hidden { display: none !important; }
-    .text-center { text-align: center; }
-    .text-right { text-align: right; }
-    .mt-2 { margin-top: 8px; }
-    .mt-4 { margin-top: 16px; }
-    .mb-2 { margin-bottom: 8px; }
-    .mb-4 { margin-bottom: 16px; }
-    .d-flex { display: flex; }
-    .align-center { align-items: center; }
-    .justify-between { justify-content: space-between; }
-    .gap-2 { gap: 8px; }
-    .flex-wrap { flex-wrap: wrap; }
   </style>
 </head>
 <body>
@@ -147,68 +84,48 @@
       <div class="auth-logo">🛒</div>
       <h1 class="auth-title">SellHub</h1>
       <p class="auth-subtitle">Gestão inteligente para Mercado Livre</p>
-      
-      <div class="auth-form">
-        <div class="form-group">
-          <label class="form-label">Nome da sua loja</label>
-          <input type="text" id="storeName" class="form-control" placeholder="Ex: Minha Loja Top" />
-        </div>
-        
-        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="handleLogin()">
-          🚀 Entrar agora
-        </button>
-        
-        <div class="mt-4">
-          <button class="btn btn-outline" style="width:100%; justify-content:center;" onclick="showFirebaseSetup()">
-            ☁️ Sincronizar na nuvem
-          </button>
-        </div>
+      <div class="form-group">
+        <input type="text" id="storeName" class="form-control" placeholder="Nome da sua loja" style="text-align:center; margin-bottom:16px;">
       </div>
-      
-      <p class="auth-footer">
-        ✅ Dados salvos no navegador • Funciona offline<br>
-        <a href="#" onclick="showHelp()">Precisa de ajuda?</a>
+      <button class="btn btn-primary" style="width:100%; justify-content:center; margin-bottom:12px;" onclick="handleLogin()">
+        🚀 Entrar agora
+      </button>
+      <p style="margin-top:16px; color:var(--gray); font-size:14px;">
+        ✅ Dados salvos no navegador<br>
+        ✅ Funciona offline
       </p>
     </div>
   </div>
 
   <!-- Main App -->
   <div id="appScreen" class="hidden">
-    
-    <!-- Header -->
     <header class="header">
       <div class="logo">
-        <span class="logo-icon">🛒</span>
+        <span>🛒</span>
         <span>SellHub</span>
       </div>
-      <div class="user-menu">
+      <div style="display:flex; align-items:center; gap:12px;">
         <span id="userName" style="font-weight:500;"></span>
-        <div class="user-avatar" onclick="showSettings()" title="Configurações">⚙️</div>
+        <div style="width:36px; height:36px; border-radius:50%; background:var(--primary); color:white; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="showSection('settings')">⚙️</div>
       </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="container">
-      <div class="nav">
+    <div class="container">
+      <nav class="nav">
         <div class="nav-item active" onclick="showSection('dashboard')">📊 Dashboard</div>
         <div class="nav-item" onclick="showSection('listings')">📦 Anúncios</div>
         <div class="nav-item" onclick="showSection('stock')">🏭 Estoque</div>
         <div class="nav-item" onclick="showSection('messages')">💬 Mensagens</div>
-        <div class="nav-item" onclick="showSection('finance')">💰 Financeiro</div>
         <div class="nav-item" onclick="showSection('settings')">⚙️ Config</div>
-      </div>
-    </nav>
+      </nav>
 
-    <!-- Content -->
-    <main class="container">
-      
       <!-- Dashboard -->
-      <section id="dashboard" class="section active">
+      <section id="dashboard">
         <div class="grid grid-4">
           <div class="card stat-card">
             <div class="stat-icon">📦</div>
             <div class="stat-value" id="statListings">0</div>
-            <div class="stat-label">Anúncios Ativos</div>
+            <div class="stat-label">Anúncios</div>
           </div>
           <div class="card stat-card">
             <div class="stat-icon">💬</div>
@@ -218,187 +135,102 @@
           <div class="card stat-card">
             <div class="stat-icon">🏭</div>
             <div class="stat-value" id="statStock">0</div>
-            <div class="stat-label">Produtos em Estoque</div>
+            <div class="stat-label">Estoque</div>
           </div>
           <div class="card stat-card">
             <div class="stat-icon">⭐</div>
-            <div class="stat-value" id="statRating">4.8</div>
-            <div class="stat-label">Avaliação Média</div>
+            <div class="stat-value">4.8</div>
+            <div class="stat-label">Avaliação</div>
           </div>
         </div>
-
-        <div class="grid grid-2 mt-4">
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title">🔔 Atividades Recentes</span>
-              <button class="btn btn-sm btn-outline" onclick="refreshData()">🔄 Atualizar</button>
-            </div>
-            <div class="card-body">
-              <div id="activitiesList">
-                <div class="empty">
-                  <div class="empty-icon">📭</div>
-                  <p>Nenhuma atividade recente</p>
-                </div>
-              </div>
-            </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">⚡ Ações Rápidas</span>
           </div>
-
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title">⚡ Ações Rápidas</span>
-            </div>
-            <div class="card-body">
-              <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 12px;">
-                <button class="btn btn-primary" onclick="openNewListingModal()">📦 Novo Anúncio</button>
-                <button class="btn btn-success" onclick="showSection('messages')">💬 Ver Mensagens</button>
-                <button class="btn btn-outline" onclick="openStockModal()">🏭 Gerenciar Estoque</button>
-                <button class="btn btn-outline" onclick="connectMercadoLivre()">🔗 Conectar ML</button>
-              </div>
-            </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+            <button class="btn btn-primary" onclick="openNewListingModal()">📦 Novo Anúncio</button>
+            <button class="btn btn-success" onclick="showSection('messages')">💬 Mensagens</button>
+            <button class="btn btn-outline" onclick="showSection('stock')">🏭 Estoque</button>
+            <button class="btn btn-outline" onclick="connectML()">🔗 Conectar ML</button>
           </div>
         </div>
       </section>
 
       <!-- Listings -->
-      <section id="listings" class="section hidden">
+      <section id="listings" class="hidden">
         <div class="card">
           <div class="card-header">
             <span class="card-title">📦 Meus Anúncios</span>
-            <button class="btn btn-primary btn-sm" onclick="openNewListingModal()">+ Novo</button>
+            <button class="btn btn-primary" onclick="openNewListingModal()">+ Novo</button>
           </div>
-          <div class="card-body">
-            <div style="overflow-x:auto;">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Produto</th>
-                    <th>Preço</th>
-                    <th>Estoque</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="listingsTable">
-                  <tr>
-                    <td colspan="5" class="text-center" style="padding:40px;">
-                      <div class="empty">
-                        <div class="empty-icon">📦</div>
-                        <p>Nenhum anúncio encontrado</p>
-                        <button class="btn btn-primary mt-2" onclick="openNewListingModal()">Criar primeiro anúncio</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div style="overflow-x:auto;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Preço</th>
+                  <th>Estoque</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="listingsTable">
+                <tr><td colspan="4" class="empty"><div class="empty-icon">📦</div><p>Nenhum anúncio</p></td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
       <!-- Stock -->
-      <section id="stock" class="section hidden">
+      <section id="stock" class="hidden">
         <div class="card">
           <div class="card-header">
-            <span class="card-title">🏭 Controle de Estoque</span>
-            <button class="btn btn-primary btn-sm" onclick="openStockModal()">+ Adicionar</button>
+            <span class="card-title">🏭 Estoque</span>
           </div>
-          <div class="card-body">
-            <div id="stockList">
-              <div class="empty">
-                <div class="empty-icon">🏭</div>
-                <p>Estoque vazio</p>
-              </div>
-            </div>
+          <div id="stockList" class="empty">
+            <div class="empty-icon">🏭</div>
+            <p>Estoque vazio</p>
           </div>
         </div>
       </section>
 
       <!-- Messages -->
-      <section id="messages" class="section hidden">
+      <section id="messages" class="hidden">
         <div class="card">
           <div class="card-header">
             <span class="card-title">💬 Mensagens</span>
-            <span class="badge badge-info" id="messagesCount">0 novas</span>
           </div>
-          <div class="card-body">
-            <div id="messagesList">
-              <div class="empty">
-                <div class="empty-icon">💬</div>
-                <p>Nenhuma mensagem</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Finance -->
-      <section id="finance" class="section hidden">
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">💰 Resumo Financeiro</span>
-          </div>
-          <div class="card-body">
-            <div class="grid grid-3">
-              <div class="stat-card" style="background:var(--light); border-radius:12px;">
-                <div class="stat-value" style="color:var(--success);">R$ 0,00</div>
-                <div class="stat-label">Vendas Hoje</div>
-              </div>
-              <div class="stat-card" style="background:var(--light); border-radius:12px;">
-                <div class="stat-value" style="color:var(--primary);">R$ 0,00</div>
-                <div class="stat-label">Vendas Mês</div>
-              </div>
-              <div class="stat-card" style="background:var(--light); border-radius:12px;">
-                <div class="stat-value" style="color:var(--warning);">R$ 0,00</div>
-                <div class="stat-label">A Receber</div>
-              </div>
-            </div>
-            <div class="mt-4 empty">
-              <p>Conecte sua conta do Mercado Livre para ver dados financeiros</p>
-              <button class="btn btn-primary mt-2" onclick="connectMercadoLivre()">🔗 Conectar Agora</button>
-            </div>
+          <div id="messagesList" class="empty">
+            <div class="empty-icon">💬</div>
+            <p>Nenhuma mensagem</p>
           </div>
         </div>
       </section>
 
       <!-- Settings -->
-      <section id="settings" class="section hidden">
+      <section id="settings" class="hidden">
         <div class="card">
           <div class="card-header">
             <span class="card-title">⚙️ Configurações</span>
           </div>
-          <div class="card-body">
-            <div class="form-group">
-              <label class="form-label">Nome da Loja</label>
-              <input type="text" id="settingsStoreName" class="form-control" />
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">Mercado Livre</label>
-              <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn btn-primary" onclick="connectMercadoLivre()">🔗 Conectar Conta</button>
-                <button class="btn btn-outline" onclick="disconnectMercadoLivre()">🔌 Desconectar</button>
-              </div>
-              <small style="color:var(--gray); display:block; margin-top:6px;">
-                Status: <span id="mlStatus">Não conectado</span>
-              </small>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">Dados</label>
-              <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn btn-outline" onclick="exportData()">📥 Exportar Dados</button>
-                <button class="btn btn-outline" onclick="clearData()">🗑️ Limpar Dados</button>
-              </div>
-            </div>
-            
-            <hr style="margin:20px 0; border:none; border-top:1px solid var(--border);"/>
-            
-            <button class="btn btn-danger" onclick="logout()" style="width:100%;">🚪 Sair</button>
+          <div class="form-group">
+            <label class="form-label">Nome da Loja</label>
+            <input type="text" id="settingsStoreName" class="form-control">
           </div>
+          <div class="form-group">
+            <label class="form-label">Mercado Livre</label>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="connectML()">🔗 Conectar</button>
+              <button class="btn btn-outline" onclick="disconnectML()">🔌 Desconectar</button>
+            </div>
+            <small style="color:var(--gray); display:block; margin-top:6px;">Status: <span id="mlStatus">Não conectado</span></small>
+          </div>
+          <hr style="margin:20px 0; border:none; border-top:1px solid var(--border);">
+          <button class="btn btn-outline" onclick="logout()" style="width:100%; color:var(--danger); border-color:var(--danger);">🚪 Sair</button>
         </div>
       </section>
-
-    </main>
+    </div>
   </div>
 
   <!-- New Listing Modal -->
@@ -410,154 +242,51 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label class="form-label">Título do Produto *</label>
-          <input type="text" id="listingTitle" class="form-control" placeholder="Ex: Camiseta Básica Algodão" />
+          <label class="form-label">Título *</label>
+          <input type="text" id="listingTitle" class="form-control">
         </div>
-        <div class="form-row">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
           <div class="form-group">
             <label class="form-label">Preço (R$) *</label>
-            <input type="number" id="listingPrice" class="form-control" step="0.01" placeholder="0.00" />
+            <input type="number" id="listingPrice" class="form-control" step="0.01">
           </div>
           <div class="form-group">
             <label class="form-label">Estoque *</label>
-            <input type="number" id="listingStock" class="form-control" placeholder="0" />
+            <input type="number" id="listingStock" class="form-control">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Categoria</label>
-          <select id="listingCategory" class="form-control">
-            <option value="">Selecione...</option>
-            <option value="roupas">Roupas e Acessórios</option>
-            <option value="eletronicos">Eletrônicos</option>
-            <option value="casa">Casa e Decoração</option>
-            <option value="esportes">Esportes e Lazer</option>
-            <option value="outros">Outros</option>
-          </select>
-        </div>
-        <div class="form-group">
           <label class="form-label">Descrição</label>
-          <textarea id="listingDescription" class="form-control" rows="4" placeholder="Descreva seu produto..."></textarea>
+          <textarea id="listingDescription" class="form-control" rows="3"></textarea>
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-outline" onclick="closeModal('newListingModal')">Cancelar</button>
-        <button class="btn btn-primary" onclick="saveListing()">💾 Salvar Anúncio</button>
+        <button class="btn btn-primary" onclick="saveListing()">💾 Salvar</button>
       </div>
     </div>
   </div>
 
-  <!-- Stock Modal -->
-  <div id="stockModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>🏭 Gerenciar Estoque</h3>
-        <button class="modal-close" onclick="closeModal('stockModal')">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label class="form-label">Produto</label>
-          <select id="stockProduct" class="form-control">
-            <option value="">Selecione...</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Quantidade</label>
-          <input type="number" id="stockQuantity" class="form-control" placeholder="0" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Tipo de Movimento</label>
-          <select id="stockType" class="form-control">
-            <option value="entrada">➕ Entrada (compra)</option>
-            <option value="saida">➖ Saída (venda)</option>
-            <option value="ajuste">🔧 Ajuste manual</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" onclick="closeModal('stockModal')">Cancelar</button>
-        <button class="btn btn-success" onclick="updateStock()">✅ Atualizar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Settings Modal -->
-  <div id="settingsModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>⚙️ Configurações</h3>
-        <button class="modal-close" onclick="closeModal('settingsModal')">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p style="color:var(--gray); margin-bottom:16px;">
-          Configure sua integração com o Mercado Livre para sincronizar dados automaticamente.
-        </p>
-        <div class="form-group">
-          <label class="form-label">Client ID do Mercado Livre</label>
-          <input type="text" id="mlClientId" class="form-control" placeholder="APP-XXXXXXXX-XXXXXXXX" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Client Secret</label>
-          <input type="password" id="mlClientSecret" class="form-control" placeholder="••••••••••••••••" />
-        </div>
-        <small style="color:var(--gray);">
-          💡 Obtenha suas credenciais em: 
-          <a href="https://developers.mercadolibre.com.br" target="_blank">developers.mercadolibre.com.br</a>
-        </small>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" onclick="closeModal('settingsModal')">Cancelar</button>
-        <button class="btn btn-primary" onclick="saveMLCredentials()">💾 Salvar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast -->
   <div id="toast" class="toast"></div>
 
-  <!-- Loading -->
-  <div id="loading" class="loading">
-    <div class="spinner"></div>
-    <p>Carregando...</p>
-  </div>
-
   <script>
-    // ── Estado Global ──
-    let state = {
-      storeName: '',
-      userName: '',
-      mlConnected: false,
-      mlToken: null,
-      listings: [],
-      stock: [],
-      messages: [],
-    };
+    let state = { storeName:'', userName:'', mlConnected:false, mlToken:null, listings:[], stock:[], messages:[] };
 
-    // ── Inicialização ──
     document.addEventListener('DOMContentLoaded', () => {
       loadState();
       checkAuth();
-      setupEventListeners();
       checkMLCallback();
     });
 
     function loadState() {
       try {
         const saved = localStorage.getItem('sellhub_state');
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          state = { ...state, ...parsed };
-        }
-      } catch (e) {
-        console.error('Erro ao carregar estado:', e);
-      }
+        if (saved) state = {...state, ...JSON.parse(saved)};
+      } catch(e) {}
     }
 
     function saveState() {
-      try {
-        localStorage.setItem('sellhub_state', JSON.stringify(state));
-      } catch (e) {
-        console.error('Erro ao salvar estado:', e);
-      }
+      try { localStorage.setItem('sellhub_state', JSON.stringify(state)); } catch(e) {}
     }
 
     function checkAuth() {
@@ -571,102 +300,52 @@
     }
 
     function handleLogin() {
-      const storeName = document.getElementById('storeName').value.trim();
-      if (!storeName) {
-        showToast('Digite o nome da sua loja', 'error');
-        return;
-      }
-      state.storeName = storeName;
-      state.userName = storeName;
+      const name = document.getElementById('storeName').value.trim();
+      if (!name) { showToast('Digite o nome da loja', 'error'); return; }
+      state.storeName = name;
+      state.userName = name;
       saveState();
       checkAuth();
-      showToast('Bem-vindo ao SellHub! 🎉', 'success');
+      showToast('Bem-vindo! 🎉', 'success');
     }
 
     function logout() {
-      if (confirm('Deseja realmente sair?')) {
-        localStorage.removeItem('sellhub_state');
-        location.reload();
-      }
+      if (confirm('Deseja sair?')) { localStorage.removeItem('sellhub_state'); location.reload(); }
     }
 
-    // ── Navegação ──
-    function showSection(sectionId) {
-      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.getElementById(sectionId).classList.remove('hidden');
+      document.getElementById(id).classList.remove('hidden');
       event.target.classList.add('active');
-      
-      if (sectionId === 'dashboard') updateDashboard();
-      if (sectionId === 'listings') renderListings();
-      if (sectionId === 'stock') renderStock();
-      if (sectionId === 'messages') renderMessages();
+      if (id === 'dashboard') updateDashboard();
+      if (id === 'listings') renderListings();
+      if (id === 'stock') renderStock();
+      if (id === 'messages') renderMessages();
     }
 
-    // ── Dashboard ──
     function updateDashboard() {
       document.getElementById('statListings').textContent = state.listings.length;
       document.getElementById('statMessages').textContent = state.messages.length;
-      document.getElementById('statStock').textContent = state.stock.reduce((sum, s) => sum + (s.quantity || 0), 0);
-      
-      const activities = document.getElementById('activitiesList');
-      if (state.listings.length === 0 && state.messages.length === 0) {
-        activities.innerHTML = `
-          <div class="empty">
-            <div class="empty-icon">📭</div>
-            <p>Nenhuma atividade recente</p>
-            <button class="btn btn-primary mt-2" onclick="openNewListingModal()">Criar primeiro anúncio</button>
-          </div>
-        `;
-      } else {
-        activities.innerHTML = state.listings.slice(0, 5).map(l => `
-          <div style="padding:12px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px;">
-            <span style="font-size:20px;">📦</span>
-            <div style="flex:1;">
-              <div style="font-weight:500;">${l.title}</div>
-              <small style="color:var(--gray);">R$ ${l.price} • Estoque: ${l.stock}</small>
-            </div>
-            <span class="badge badge-success">Ativo</span>
-          </div>
-        `).join('') || '<p style="color:var(--gray);">Sem anúncios</p>';
-      }
-      
+      document.getElementById('statStock').textContent = state.stock.reduce((s,x) => s + (x.qty||0), 0);
       updateMLStatus();
     }
 
-    // ── Mercado Livre Integration ──
-    function connectMercadoLivre() {
-      const clientId = prompt('Digite seu Client ID do Mercado Livre:');
-      const clientSecret = prompt('Digite seu Client Secret:');
-      
-      if (!clientId || !clientSecret) {
-        showToast('Credenciais necessárias para conectar', 'error');
-        return;
-      }
-      
-      // Salvar credenciais (em produção, usar backend seguro)
+    function connectML() {
+      const clientId = prompt('Client ID do Mercado Livre:');
+      const clientSecret = prompt('Client Secret:');
+      if (!clientId || !clientSecret) { showToast('Credenciais necessárias', 'error'); return; }
       state.mlClientId = clientId;
       state.mlClientSecret = clientSecret;
       saveState();
-      
-      // Redirecionar para OAuth do ML
       const redirectUri = encodeURIComponent(window.location.origin + '/ml-callback');
       const authUrl = `https://auth.mercadolibre.com.br/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${btoa(JSON.stringify({id:clientId,sec:clientSecret}))}`;
-      
       window.location.href = authUrl;
     }
 
     function checkMLCallback() {
       const params = new URLSearchParams(window.location.search);
       const tokenData = params.get('ml_token');
-      const error = params.get('ml_error');
-      
-      if (error) {
-        showToast(`Erro ML: ${decodeURIComponent(error)}`, 'error');
-        history.replaceState({}, '', window.location.pathname);
-        return;
-      }
-      
       if (tokenData) {
         try {
           const token = JSON.parse(decodeURIComponent(tokenData));
@@ -674,28 +353,26 @@
           state.mlConnected = true;
           state.userName = token.user_name || state.storeName;
           saveState();
-          showToast(`Conectado como ${token.user_name}! 🎉`, 'success');
+          showToast(`Conectado: ${token.user_name}!`, 'success');
           updateMLStatus();
           history.replaceState({}, '', window.location.pathname);
-        } catch (e) {
-          showToast('Erro ao processar token', 'error');
-        }
+        } catch(e) { showToast('Erro no token', 'error'); }
       }
     }
 
     function updateMLStatus() {
-      const status = document.getElementById('mlStatus');
+      const el = document.getElementById('mlStatus');
       if (state.mlConnected && state.mlToken) {
-        status.textContent = `✅ Conectado (${state.mlToken.user_name})`;
-        status.style.color = 'var(--success)';
+        el.textContent = `✅ Conectado (${state.mlToken.user_name})`;
+        el.style.color = 'var(--success)';
       } else {
-        status.textContent = '❌ Não conectado';
-        status.style.color = 'var(--danger)';
+        el.textContent = '❌ Não conectado';
+        el.style.color = 'var(--danger)';
       }
     }
 
-    function disconnectMercadoLivre() {
-      if (confirm('Desconectar do Mercado Livre?')) {
+    function disconnectML() {
+      if (confirm('Desconectar?')) {
         state.mlConnected = false;
         state.mlToken = null;
         saveState();
@@ -704,38 +381,18 @@
       }
     }
 
-    // ── Listings ──
     function renderListings() {
       const tbody = document.getElementById('listingsTable');
-      
       if (state.listings.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="5" class="text-center" style="padding:40px;">
-              <div class="empty">
-                <div class="empty-icon">📦</div>
-                <p>Nenhum anúncio encontrado</p>
-                <button class="btn btn-primary mt-2" onclick="openNewListingModal()">Criar primeiro anúncio</button>
-              </div>
-            </td>
-          </tr>
-        `;
+        tbody.innerHTML = '<tr><td colspan="4" class="empty"><div class="empty-icon">📦</div><p>Nenhum anúncio</p></td></tr>';
         return;
       }
-      
-      tbody.innerHTML = state.listings.map((l, i) => `
+      tbody.innerHTML = state.listings.map((l,i) => `
         <tr>
-          <td>
-            <strong>${l.title}</strong><br>
-            <small style="color:var(--gray);">${l.category || 'Sem categoria'}</small>
-          </td>
+          <td><strong>${l.title}</strong></td>
           <td>R$ ${parseFloat(l.price).toFixed(2)}</td>
           <td>${l.stock}</td>
-          <td><span class="badge badge-success">Ativo</span></td>
-          <td>
-            <button class="btn btn-sm btn-outline" onclick="editListing(${i})">✏️</button>
-            <button class="btn btn-sm btn-outline" style="color:var(--danger);" onclick="deleteListing(${i})">🗑️</button>
-          </td>
+          <td><button class="btn btn-outline" style="padding:4px 8px; font-size:12px;" onclick="deleteListing(${i})">🗑️</button></td>
         </tr>
       `).join('');
     }
@@ -744,7 +401,6 @@
       document.getElementById('listingTitle').value = '';
       document.getElementById('listingPrice').value = '';
       document.getElementById('listingStock').value = '';
-      document.getElementById('listingCategory').value = '';
       document.getElementById('listingDescription').value = '';
       document.getElementById('newListingModal').classList.add('active');
     }
@@ -753,263 +409,51 @@
       const title = document.getElementById('listingTitle').value.trim();
       const price = parseFloat(document.getElementById('listingPrice').value);
       const stock = parseInt(document.getElementById('listingStock').value);
-      
-      if (!title || isNaN(price) || isNaN(stock)) {
-        showToast('Preencha todos os campos obrigatórios', 'error');
-        return;
-      }
-      
-      const listing = {
-        id: Date.now(),
-        title,
-        price,
-        stock,
-        category: document.getElementById('listingCategory').value,
-        description: document.getElementById('listingDescription').value.trim(),
-        createdAt: new Date().toISOString(),
-        status: 'active'
-      };
-      
-      state.listings.unshift(listing);
+      if (!title || isNaN(price) || isNaN(stock)) { showToast('Preencha os campos', 'error'); return; }
+      state.listings.unshift({ id:Date.now(), title, price, stock, description:document.getElementById('listingDescription').value });
       saveState();
       closeModal('newListingModal');
       renderListings();
       updateDashboard();
-      showToast('Anúncio salvo com sucesso! ✅', 'success');
+      showToast('Anúncio salvo! ✅', 'success');
     }
 
-    function editListing(index) {
-      const l = state.listings[index];
-      document.getElementById('listingTitle').value = l.title;
-      document.getElementById('listingPrice').value = l.price;
-      document.getElementById('listingStock').value = l.stock;
-      document.getElementById('listingCategory').value = l.category || '';
-      document.getElementById('listingDescription').value = l.description || '';
-      document.getElementById('newListingModal').classList.add('active');
-      
-      // Remover antigo e salvar como novo ao editar
-      document.querySelector('#newListingModal .btn-primary').onclick = () => {
-        state.listings.splice(index, 1);
-        saveListing();
-      };
-    }
-
-    function deleteListing(index) {
-      if (confirm('Excluir este anúncio?')) {
-        state.listings.splice(index, 1);
+    function deleteListing(i) {
+      if (confirm('Excluir?')) {
+        state.listings.splice(i, 1);
         saveState();
         renderListings();
         updateDashboard();
-        showToast('Anúncio excluído', 'success');
       }
     }
 
-    // ── Stock ──
     function renderStock() {
       const container = document.getElementById('stockList');
-      
       if (state.stock.length === 0) {
-        container.innerHTML = `
-          <div class="empty">
-            <div class="empty-icon">🏭</div>
-            <p>Estoque vazio</p>
-            <button class="btn btn-primary mt-2" onclick="openStockModal()">Adicionar produto</button>
-          </div>
-        `;
+        container.innerHTML = '<div class="empty"><div class="empty-icon">🏭</div><p>Estoque vazio</p></div>';
         return;
       }
-      
-      // Agrupar por produto
-      const grouped = {};
-      state.stock.forEach(s => {
-        if (!grouped[s.productId]) grouped[s.productId] = { product: s.product, quantity: 0, movements: [] };
-        grouped[s.productId].quantity += s.type === 'entrada' ? s.quantity : -s.quantity;
-        grouped[s.productId].movements.push(s);
-      });
-      
-      container.innerHTML = Object.values(grouped).map(g => `
-        <div style="padding:16px; border:1px solid var(--border); border-radius:8px; margin-bottom:12px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <strong>${g.product}</strong>
-            <span class="badge ${g.quantity > 10 ? 'badge-success' : g.quantity > 0 ? 'badge-warning' : 'badge-danger'}">
-              ${g.quantity} unidades
-            </span>
-          </div>
-          <small style="color:var(--gray);">
-            ${g.movements.length} movimento${g.movements.length > 1 ? 's' : ''}
-          </small>
-        </div>
-      `).join('');
-      
-      // Atualizar select do modal
-      const select = document.getElementById('stockProduct');
-      select.innerHTML = '<option value="">Selecione...</option>' + 
-        state.listings.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
+      container.innerHTML = state.stock.map(s => `<div style="padding:12px; border-bottom:1px solid var(--border);"><strong>${s.product}</strong> - ${s.qty} un</div>`).join('');
     }
 
-    function openStockModal() {
-      if (state.listings.length === 0) {
-        showToast('Crie um anúncio primeiro', 'error');
-        return;
-      }
-      document.getElementById('stockQuantity').value = '';
-      document.getElementById('stockType').value = 'entrada';
-      document.getElementById('stockModal').classList.add('active');
-    }
-
-    function updateStock() {
-      const productId = document.getElementById('stockProduct').value;
-      const quantity = parseInt(document.getElementById('stockQuantity').value);
-      const type = document.getElementById('stockType').value;
-      
-      if (!productId || isNaN(quantity) || quantity <= 0) {
-        showToast('Preencha os campos corretamente', 'error');
-        return;
-      }
-      
-      const product = state.listings.find(l => l.id == productId);
-      if (!product) return;
-      
-      state.stock.push({
-        id: Date.now(),
-        productId,
-        product: product.title,
-        quantity,
-        type,
-        date: new Date().toISOString()
-      });
-      
-      saveState();
-      closeModal('stockModal');
-      renderStock();
-      updateDashboard();
-      showToast('Estoque atualizado! ✅', 'success');
-    }
-
-    // ── Messages ──
     function renderMessages() {
       const container = document.getElementById('messagesList');
-      document.getElementById('messagesCount').textContent = `${state.messages.length} nova${state.messages.length !== 1 ? 's' : ''}`;
-      
       if (state.messages.length === 0) {
-        container.innerHTML = `
-          <div class="empty">
-            <div class="empty-icon">💬</div>
-            <p>Nenhuma mensagem</p>
-          </div>
-        `;
-        return;
-      }
-      
-      container.innerHTML = state.messages.map(m => `
-        <div style="padding:16px; border-bottom:1px solid var(--border);">
-          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-            <strong>${m.from}</strong>
-            <small style="color:var(--gray);">${new Date(m.date).toLocaleDateString()}</small>
-          </div>
-          <p style="margin-bottom:8px;">${m.text}</p>
-          <button class="btn btn-sm btn-primary" onclick="replyMessage('${m.id}')">Responder</button>
-        </div>
-      `).join('');
-    }
-
-    function replyMessage(id) {
-      const msg = state.messages.find(m => m.id === id);
-      if (msg) {
-        const reply = prompt(`Responder para ${msg.from}:`);
-        if (reply) {
-          showToast('Resposta enviada! (simulação)', 'success');
-        }
+        container.innerHTML = '<div class="empty"><div class="empty-icon">💬</div><p>Nenhuma mensagem</p></div>';
       }
     }
 
-    // ── Modals ──
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.remove('active');
-      // Resetar botão de salvar para comportamento padrão
-      if (modalId === 'newListingModal') {
-        document.querySelector('#newListingModal .btn-primary').onclick = saveListing;
-      }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    function showToast(msg, type='info') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = `toast ${type} active`;
+      setTimeout(() => t.classList.remove('active'), 3000);
     }
 
-    // ── Toast ──
-    function showToast(message, type = 'info') {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.className = `toast ${type} active`;
-      setTimeout(() => toast.classList.remove('active'), 4000);
-    }
-
-    // ── Utils ──
-    function setupEventListeners() {
-      // Fechar modal ao clicar fora
-      document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) {
-            modal.classList.remove('active');
-          }
-        });
-      });
-      
-      // Enter em inputs do modal
-      document.querySelectorAll('.modal input, .modal textarea').forEach(input => {
-        input.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            const modal = e.target.closest('.modal');
-            const saveBtn = modal.querySelector('.btn-primary');
-            if (saveBtn) saveBtn.click();
-          }
-        });
-      });
-    }
-
-    function showSettings() {
-      document.getElementById('settingsStoreName').value = state.storeName;
-      showSection('settings');
-    }
-
-    function showFirebaseSetup() {
-      showToast('Funcionalidade de nuvem em desenvolvimento 🔧', 'info');
-    }
-
-    function showHelp() {
-      alert('💡 Dica: Para conectar com o Mercado Livre:\n\n1. Acesse developers.mercadolibre.com.br\n2. Crie uma aplicação\n3. Copie Client ID e Secret\n4. Use o botão "Conectar ML" nas configurações\n\nPrecisa de mais ajuda? Acesse nossa documentação!');
-    }
-
-    function refreshData() {
-      showToast('Dados atualizados! 🔄', 'success');
-      updateDashboard();
-    }
-
-    function exportData() {
-      const data = JSON.stringify(state, null, 2);
-      const blob = new Blob([data], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `sellhub-backup-${new Date().toISOString().split('T')[0]}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('Dados exportados! 📥', 'success');
-    }
-
-    function clearData() {
-      if (confirm('⚠️ Isso apagará TODOS os seus dados locais. Continuar?')) {
-        localStorage.removeItem('sellhub_state');
-        location.reload();
-      }
-    }
-
-    // ── Keyboard Shortcuts ──
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
-      }
-      if (e.ctrlKey && e.key === 'n') {
-        e.preventDefault();
-        openNewListingModal();
-      }
+    document.querySelectorAll('.modal').forEach(m => {
+      m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
     });
   </script>
 </body>
